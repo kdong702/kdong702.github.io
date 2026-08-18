@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>프로젝트 상세</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">김동현</div>
+      <nav>
+        <a href="index.html#about">소개</a>
+        <a href="index.html#projects">프로젝트</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="detail-header">
+    <div class="container">
+      <a class="back-link" href="index.html">&larr; 목록으로</a>
+      <div class="company" id="d-company"></div>
+      <h1 id="d-title"></h1>
+      <div class="detail-meta">
+        <span id="d-period"></span>
+        <span id="d-team"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="detail-body">
+    <div class="container">
+      <div class="detail-block">
+        <h2>프로젝트 개요</h2>
+        <p id="d-summary"></p>
+      </div>
+      <div class="detail-block" id="d-screenshots-block">
+        <h2>스크린샷</h2>
+        <div class="screenshot-gallery" id="d-screenshots"></div>
+      </div>
+      <div class="detail-block" id="d-metrics-block">
+        <h2>프로젝트 규모</h2>
+        <div class="metrics-row" id="d-metrics"></div>
+      </div>
+      <div class="detail-block" id="d-diagram-block">
+        <h2>시스템 구성도</h2>
+        <div class="diagram-box" id="d-diagram"></div>
+      </div>
+      <div class="detail-block" id="d-role-block">
+        <h2>역할 및 담당 업무</h2>
+        <p id="d-role"></p>
+      </div>
+      <div class="detail-block">
+        <h2>사용 기술 스택</h2>
+        <div class="tech-stack-list" id="d-techstack"></div>
+      </div>
+      <div class="detail-block" id="d-achievements-block">
+        <h2>주요 성과 / 트러블슈팅</h2>
+        <ul id="d-achievements"></ul>
+      </div>
+      <div class="detail-block">
+        <h2>직접 개발한 기능</h2>
+        <ul id="d-keyfeatures"></ul>
+      </div>
+      <div class="detail-block" id="d-challenges-block">
+        <h2>어려웠던 점 &amp; 해결 방법</h2>
+        <div id="d-challenges"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      &copy; <span id="year"></span> 김동현
+    </div>
+  </footer>
+
+  <div class="lightbox-overlay" id="lightbox-overlay">
+    <figure class="lightbox-figure">
+      <img id="lightbox-img" src="" alt="" />
+      <figcaption id="lightbox-caption"></figcaption>
+    </figure>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/detail.js"></script>
+</body>
+</html>
