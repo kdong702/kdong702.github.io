@@ -67,19 +67,6 @@ if (!project) {
     screenshotsBlock.style.display = "none";
   }
 
-  const metricsBlock = document.getElementById("d-metrics-block");
-  if (project.metrics) {
-    const metricsEl = document.getElementById("d-metrics");
-    project.metrics.forEach((m) => {
-      const tile = document.createElement("div");
-      tile.className = "metric-tile";
-      tile.innerHTML = `<div class="metric-value">${m.value}</div><div class="metric-label">${m.label}</div>`;
-      metricsEl.appendChild(tile);
-    });
-  } else {
-    metricsBlock.style.display = "none";
-  }
-
   const diagramBlock = document.getElementById("d-diagram-block");
   if (project.diagram) {
     document.getElementById("d-diagram").innerHTML = project.diagram;
@@ -106,17 +93,12 @@ if (!project) {
     achievementsBlock.style.display = "none";
   }
 
-  const featEl = document.getElementById("d-keyfeatures");
-  project.keyFeatures.forEach((item) => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    featEl.appendChild(li);
-  });
-
   const challengesBlock = document.getElementById("d-challenges-block");
   if (project.challenges && project.challenges.length > 0) {
     const challEl = document.getElementById("d-challenges");
-    project.challenges.forEach((item) => {
+    const notes = (typeof privateNotes !== "undefined" && privateNotes[project.id]) || null;
+
+    project.challenges.forEach((item, index) => {
       const wrapper = document.createElement("div");
       wrapper.className = "challenge-item";
       let html = `
@@ -127,9 +109,114 @@ if (!project) {
         html += `<p class="challenge-detail">${item.detail}</p>`;
       }
       wrapper.innerHTML = html;
+
+      const note = notes && notes[index];
+      if (note) {
+        const toggleBtn = document.createElement("button");
+        toggleBtn.type = "button";
+        toggleBtn.className = "private-note-toggle";
+        toggleBtn.textContent = "🔒 자세히 보기 (비공개 메모)";
+
+        const noteBox = document.createElement("div");
+        noteBox.className = "private-note-box";
+        noteBox.hidden = true;
+        noteBox.innerHTML = `
+          <p class="private-note-label">🔒 비공개 메모 — 로컬에서만 보이고 배포된 사이트에는 없습니다.</p>
+          <p><strong>어려웠던 점</strong> ${note.problem}</p>
+          <p><strong>해결 방법</strong> ${note.solution}</p>
+          <p>${note.detail}</p>
+        `;
+
+        toggleBtn.addEventListener("click", () => {
+          noteBox.hidden = !noteBox.hidden;
+          toggleBtn.textContent = noteBox.hidden
+            ? "🔒 자세히 보기 (비공개 메모)"
+            : "🔒 접기 (비공개 메모)";
+        });
+
+        wrapper.appendChild(toggleBtn);
+        wrapper.appendChild(noteBox);
+      }
+
       challEl.appendChild(wrapper);
     });
   } else {
     challengesBlock.style.display = "none";
   }
 }
+
+// 모바일 스와이프-뒤로가기 (화면 왼쪽 가장자리에서 오른쪽으로 밀면 목록으로 이동)
+(function setupSwipeBack() {
+  const shell = document.getElementById("page-shell");
+  if (!shell) return;
+
+  const EDGE_ZONE = 28; // 이 픽셀 범위 안에서 시작한 터치만 인식
+  const COMMIT_DISTANCE = 90; // 이 이상 밀면 뒤로가기 확정
+  const COMMIT_VELOCITY = 0.5; // px/ms — 빠르게 짧게 밀어도 확정
+
+  let startX = 0;
+  let startY = 0;
+  let startTime = 0;
+  let currentX = 0;
+  let tracking = false;
+  let decided = false; // 가로 스와이프로 판단됐는지
+
+  shell.addEventListener("touchstart", (e) => {
+    if (e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    if (touch.clientX > EDGE_ZONE) return;
+    tracking = true;
+    decided = false;
+    startX = touch.clientX;
+    startY = touch.clientY;
+    currentX = startX;
+    startTime = Date.now();
+    shell.classList.remove("swipe-animating");
+  }, { passive: true });
+
+  shell.addEventListener("touchmove", (e) => {
+    if (!tracking) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+
+    if (!decided) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      if (Math.abs(dy) > Math.abs(dx) || dx < 0) {
+        tracking = false; // 세로 스크롤이거나 왼쪽으로 미는 제스처면 포기
+        return;
+      }
+      decided = true;
+      shell.classList.add("swipe-dragging");
+    }
+
+    e.preventDefault();
+    currentX = touch.clientX;
+    shell.style.transform = `translateX(${dx}px)`;
+  }, { passive: false });
+
+  function finishSwipe() {
+    if (!tracking || !decided) {
+      tracking = false;
+      return;
+    }
+    tracking = false;
+    const dx = currentX - startX;
+    const elapsed = Math.max(Date.now() - startTime, 1);
+    const velocity = dx / elapsed;
+    shell.classList.remove("swipe-dragging");
+    shell.classList.add("swipe-animating");
+
+    if (dx > COMMIT_DISTANCE || velocity > COMMIT_VELOCITY) {
+      shell.style.transform = `translateX(100%)`;
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 220);
+    } else {
+      shell.style.transform = "translateX(0)";
+    }
+  }
+
+  shell.addEventListener("touchend", finishSwipe);
+  shell.addEventListener("touchcancel", finishSwipe);
+})();

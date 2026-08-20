@@ -382,39 +382,53 @@ header.site-header .container {
   line-height: 1.7;
 }
 
+.private-note-toggle {
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: 1px dashed var(--border);
+  border-radius: 999px;
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.private-note-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.private-note-box {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  background: var(--bg-alt);
+}
+
+.private-note-box p {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.private-note-box p:last-child {
+  margin-bottom: 0;
+}
+
+.private-note-label {
+  font-size: 0.78rem !important;
+  color: var(--text-muted) !important;
+  font-style: italic;
+}
+
 .tech-stack-list span {
   background: var(--bg-alt);
   border: 1px solid var(--border);
   padding: 4px 12px;
   border-radius: 999px;
   font-size: 0.82rem;
-}
-
-/* Metrics tiles */
-.metrics-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-}
-
-.metric-tile {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px;
-  background: var(--bg-alt);
-}
-
-.metric-value {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: -0.02em;
-}
-
-.metric-label {
-  margin-top: 4px;
-  font-size: 0.8rem;
-  color: var(--text-muted);
 }
 
 /* Architecture diagram */
@@ -432,6 +446,13 @@ header.site-header .container {
   min-width: 480px;
   display: block;
   margin: 0 auto;
+}
+
+.diagram-subtitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 24px 0 12px;
 }
 
 /* Screenshot gallery */
@@ -514,4 +535,24 @@ footer.site-footer {
   padding: 24px 0;
   color: var(--text-muted);
   font-size: 0.82rem;
+}
+
+/* Mobile swipe-back (detail page) */
+body.detail-page {
+  background: var(--bg-alt);
+}
+
+.page-shell {
+  background: var(--bg);
+  min-height: 100vh;
+  touch-action: pan-y;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.page-shell.swipe-dragging {
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
+}
+
+.page-shell.swipe-animating {
+  transition: transform 0.28s ease-out, box-shadow 0.28s ease-out;
 }

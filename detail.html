@@ -6,7 +6,8 @@
   <title>프로젝트 상세</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="detail-page">
+  <div class="page-shell" id="page-shell">
   <header class="site-header">
     <div class="container">
       <div class="logo">김동현</div>
@@ -39,10 +40,6 @@
         <h2>스크린샷</h2>
         <div class="screenshot-gallery" id="d-screenshots"></div>
       </div>
-      <div class="detail-block" id="d-metrics-block">
-        <h2>프로젝트 규모</h2>
-        <div class="metrics-row" id="d-metrics"></div>
-      </div>
       <div class="detail-block" id="d-diagram-block">
         <h2>시스템 구성도</h2>
         <div class="diagram-box" id="d-diagram"></div>
@@ -59,10 +56,6 @@
         <h2>주요 성과 / 트러블슈팅</h2>
         <ul id="d-achievements"></ul>
       </div>
-      <div class="detail-block">
-        <h2>직접 개발한 기능</h2>
-        <ul id="d-keyfeatures"></ul>
-      </div>
       <div class="detail-block" id="d-challenges-block">
         <h2>어려웠던 점 &amp; 해결 방법</h2>
         <div id="d-challenges"></div>
@@ -75,6 +68,7 @@
       &copy; <span id="year"></span> 김동현
     </div>
   </footer>
+  </div>
 
   <div class="lightbox-overlay" id="lightbox-overlay">
     <figure class="lightbox-figure">
@@ -84,6 +78,7 @@
   </div>
 
   <script src="js/data.js"></script>
+  <script src="js/private-notes.js" onerror="void 0"></script>
   <script src="js/detail.js"></script>
 </body>
 </html>
