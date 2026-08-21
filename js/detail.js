@@ -1,10 +1,36 @@
 document.getElementById("year").textContent = new Date().getFullYear();
 
-function openLightbox(src, caption) {
-  const overlay = document.getElementById("lightbox-overlay");
-  document.getElementById("lightbox-img").src = src;
-  document.getElementById("lightbox-caption").textContent = caption || "";
-  overlay.classList.add("active");
+let lightboxItems = [];
+let lightboxIndex = 0;
+
+function renderLightbox() {
+  const item = lightboxItems[lightboxIndex];
+  if (!item) return;
+  document.getElementById("lightbox-img").src = item.src;
+  document.getElementById("lightbox-img").alt = item.caption || "";
+  document.getElementById("lightbox-caption").textContent = item.caption || "";
+  const multi = lightboxItems.length > 1;
+  document.getElementById("lightbox-prev").style.display = multi ? "flex" : "none";
+  document.getElementById("lightbox-next").style.display = multi ? "flex" : "none";
+}
+
+function openLightbox(items, index) {
+  lightboxItems = items;
+  lightboxIndex = index;
+  renderLightbox();
+  document.getElementById("lightbox-overlay").classList.add("active");
+}
+
+function showPrevLightbox() {
+  if (!lightboxItems.length) return;
+  lightboxIndex = (lightboxIndex - 1 + lightboxItems.length) % lightboxItems.length;
+  renderLightbox();
+}
+
+function showNextLightbox() {
+  if (!lightboxItems.length) return;
+  lightboxIndex = (lightboxIndex + 1) % lightboxItems.length;
+  renderLightbox();
 }
 
 function closeLightbox() {
@@ -12,8 +38,19 @@ function closeLightbox() {
 }
 
 document.getElementById("lightbox-overlay").addEventListener("click", closeLightbox);
+document.getElementById("lightbox-prev").addEventListener("click", (e) => {
+  e.stopPropagation();
+  showPrevLightbox();
+});
+document.getElementById("lightbox-next").addEventListener("click", (e) => {
+  e.stopPropagation();
+  showNextLightbox();
+});
 document.addEventListener("keydown", (e) => {
+  if (!document.getElementById("lightbox-overlay").classList.contains("active")) return;
   if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowLeft") showPrevLightbox();
+  if (e.key === "ArrowRight") showNextLightbox();
 });
 
 const params = new URLSearchParams(window.location.search);
@@ -53,14 +90,14 @@ if (!project) {
   const screenshotsBlock = document.getElementById("d-screenshots-block");
   if (project.screenshots && project.screenshots.length > 0) {
     const galleryEl = document.getElementById("d-screenshots");
-    project.screenshots.forEach((shot) => {
+    project.screenshots.forEach((shot, index) => {
       const figure = document.createElement("figure");
       figure.className = "screenshot-item";
       figure.innerHTML = `
         <img src="${shot.src}" alt="${shot.caption}" loading="lazy" />
         <figcaption>${shot.caption}</figcaption>
       `;
-      figure.querySelector("img").addEventListener("click", () => openLightbox(shot.src, shot.caption));
+      figure.querySelector("img").addEventListener("click", () => openLightbox(project.screenshots, index));
       galleryEl.appendChild(figure);
     });
   } else {
@@ -69,6 +106,7 @@ if (!project) {
 
   const diagramBlock = document.getElementById("d-diagram-block");
   if (project.diagram) {
+    document.getElementById("d-diagram-title").textContent = project.diagramTitle || "시스템 구성도";
     document.getElementById("d-diagram").innerHTML = project.diagram;
   } else {
     diagramBlock.style.display = "none";

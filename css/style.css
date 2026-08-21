@@ -68,10 +68,13 @@ header.site-header .container {
 }
 
 .hero-inner {
-  display: flex;
-  align-items: flex-start;
-  gap: 32px;
-  flex-wrap: wrap;
+  display: block;
+}
+
+.hero-inner::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .profile-photo {
@@ -81,12 +84,15 @@ header.site-header .container {
   object-fit: cover;
   border: 1px solid var(--border);
   background: var(--bg-alt);
-  flex-shrink: 0;
+  float: left;
+  margin-right: 32px;
+  margin-bottom: 16px;
 }
 
 .hero-text {
-  flex: 1;
   min-width: 260px;
+  max-width: 720px;
+  word-break: keep-all;
 }
 
 .hero-meta {
@@ -113,7 +119,6 @@ header.site-header .container {
 .hero p.lead {
   color: var(--text-muted);
   font-size: 1.05rem;
-  max-width: 640px;
   margin: 0 0 24px;
 }
 
@@ -527,6 +532,38 @@ header.site-header .container {
   color: #fff;
   font-size: 0.9rem;
   opacity: 0.85;
+}
+
+.lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 1.8rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.lightbox-prev {
+  left: 16px;
+}
+
+.lightbox-next {
+  right: 16px;
 }
 
 /* Footer */
