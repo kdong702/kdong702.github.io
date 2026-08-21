@@ -18,6 +18,7 @@ function renderProjects(matchList) {
     card.className = "project-card";
     card.href = `detail.html?id=${project.id}`;
     card.innerHTML = `
+      ${project.featured ? '<div class="featured-badge">★ 대표 프로젝트</div>' : ""}
       <div class="company">${project.company}</div>
       <h3>${project.title}</h3>
       <div class="period">${project.period}</div>
@@ -41,6 +42,7 @@ function renderPersonalProjects(matchList) {
     card.className = "project-card";
     card.href = `detail.html?id=${project.id}`;
     card.innerHTML = `
+      ${project.featured ? '<div class="featured-badge">★ 대표 프로젝트</div>' : ""}
       <div class="company">개인 프로젝트</div>
       <h3>${project.title}</h3>
       <div class="period">${project.period}</div>
@@ -99,3 +101,9 @@ allBtn.addEventListener("click", () => {
 
 renderProjects(null);
 renderPersonalProjects(null);
+
+// 지원 Q&A 페이지 노출 여부 — qa-data.js의 qaPageVisible 플래그 하나로 nav 링크만 제어
+if (typeof qaPageVisible !== "undefined" && qaPageVisible) {
+  const navLink = document.getElementById("nav-qa");
+  if (navLink) navLink.style.display = "";
+}

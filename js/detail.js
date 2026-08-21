@@ -139,14 +139,32 @@ if (!project) {
     project.challenges.forEach((item, index) => {
       const wrapper = document.createElement("div");
       wrapper.className = "challenge-item";
-      let html = `
+      wrapper.innerHTML = `
         <p class="challenge-problem"><strong>어려웠던 점</strong> ${item.problem}</p>
         <p class="challenge-solution"><strong>해결 방법</strong> ${item.solution}</p>
       `;
+
       if (item.detail) {
-        html += `<p class="challenge-detail">${item.detail}</p>`;
+        const paragraphs = Array.isArray(item.detail) ? item.detail : [item.detail];
+
+        const detailToggle = document.createElement("button");
+        detailToggle.type = "button";
+        detailToggle.className = "detail-toggle";
+        detailToggle.textContent = "▸ 자세히 보기";
+
+        const detailBox = document.createElement("div");
+        detailBox.className = "detail-box";
+        detailBox.hidden = true;
+        detailBox.innerHTML = paragraphs.map((p) => `<p>${p}</p>`).join("");
+
+        detailToggle.addEventListener("click", () => {
+          detailBox.hidden = !detailBox.hidden;
+          detailToggle.textContent = detailBox.hidden ? "▸ 자세히 보기" : "▾ 접기";
+        });
+
+        wrapper.appendChild(detailToggle);
+        wrapper.appendChild(detailBox);
       }
-      wrapper.innerHTML = html;
 
       const note = notes && notes[index];
       if (note) {

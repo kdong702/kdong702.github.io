@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>지원 Q&amp;A — 포트폴리오</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">김동현</div>
+      <nav>
+        <a href="index.html#about">소개</a>
+        <a href="index.html#projects">프로젝트</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="detail-header">
+    <div class="container">
+      <a class="back-link" href="index.html">&larr; 홈으로</a>
+      <h1>지원 Q&amp;A</h1>
+      <div class="detail-meta">지원 과정에서 받은 질문과 답변을 정리해둔 곳입니다.</div>
+    </div>
+  </section>
+
+  <section class="detail-body">
+    <div class="container">
+      <div class="qa-filter-bar" id="qa-filter-bar">
+        <button type="button" class="tag qa-filter-tag qa-filter-active" data-status="">전체</button>
+      </div>
+      <div id="qa-list"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      &copy; <span id="year"></span> 김동현
+    </div>
+  </footer>
+
+  <script src="js/qa-data.js"></script>
+  <script src="js/qa.js"></script>
+</body>
+</html>
