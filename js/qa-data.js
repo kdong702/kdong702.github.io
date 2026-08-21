@@ -1,6 +1,6 @@
 // 지원 Q&A 페이지 전체 공개 여부 — true면 index.html 네비게이션에 "지원 Q&A" 링크가 나타남
 // (개별 항목 단위가 아니라 페이지 전체를 켜고 끄는 스위치. gitignore가 아니라 이 값으로 공개 여부를 제어)
-const qaPageVisible = true;
+const qaPageVisible = false;
 
 // 지원 항목 목록 — status는 자유 문자열이며, 실제로 쓰는 값들이 qa.html에서 필터 버튼으로 자동 생성됨
 // (예: "지원중", "서류 합격", "1차 합격", "2차 합격", "최종 합격", "불합격" 등)
