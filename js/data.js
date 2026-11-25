@@ -2,6 +2,85 @@
 // TODO 표시된 항목은 실제 내용으로 채워주세요.
 const projects = [
   {
+    id: "dku-npay-facesign",
+    company: "단국대학교",
+    title: "네이버페이 페이스사인 학생 인증 연계",
+    period: "2026.09.18 ~ 2026.11.23",
+    category: "시스템구축 및 운영 > IT시스템관리",
+    summary: "단국대학교 학생증 발급 시스템(IDT API)에 네이버페이 페이스사인 연계 기능을 추가한 프로젝트입니다. 페이스사인 쪽에서 우리은행을 거쳐 들어오는 사용자 등록·조회·철회 요청을 받아, 학번과 네이버페이 매핑키를 연결하고 학사 정보로 본인 여부를 확인한 뒤 결과를 돌려줍니다. 매핑 상태와 상태 변경 이력, 모든 요청·응답 전문을 DB에 남겨 장애가 나도 요청 단위로 추적할 수 있게 했습니다.",
+    role: "기존에 운영 중이던 삼성페이 모바일 학생증 연동 구조를 바탕으로, 페이스사인 연계용 API를 별도 패키지로 분리해 설계부터 구현까지 전담했습니다. 등록·조회·철회 API, 인증·입력 검증·전문 로깅을 담당하는 AOP 구성, 매핑/이력/로그 테이블 설계, 운영자가 바로 확인할 수 있는 테스트·조회 화면과 인수인계 문서까지 직접 작성했습니다.",
+    teamSize: "본인 1명 — 설계·개발 단독 수행",
+    techStack: ["Java 8", "Spring Framework 3.2", "Spring AOP", "MyBatis", "Oracle"],
+    diagram: `<svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="dku-npay-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#2f3ea3"/>
+        </marker>
+      </defs>
+      <rect x="20" y="100" width="160" height="70" rx="10" fill="#ffffff" stroke="#e5e7eb"/>
+      <text x="100" y="128" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1d23">네이버페이 페이스사인</text>
+      <text x="100" y="148" text-anchor="middle" font-size="11" fill="#6b7280">우리은행 경유 요청</text>
+
+      <rect x="265" y="30" width="210" height="210" rx="10" fill="#eceefb" stroke="#2f3ea3"/>
+      <text x="370" y="58" text-anchor="middle" font-size="14" font-weight="600" fill="#2f3ea3">단국대 IDT API</text>
+      <text x="370" y="88" text-anchor="middle" font-size="11" fill="#2f3ea3">① 로깅 AOP (전체 감쌈)</text>
+      <text x="370" y="110" text-anchor="middle" font-size="11" fill="#2f3ea3">② Basic 인증 AOP</text>
+      <text x="370" y="132" text-anchor="middle" font-size="11" fill="#2f3ea3">③ 입력 검증 AOP (@Param)</text>
+      <line x1="295" y1="148" x2="445" y2="148" stroke="#2f3ea3" stroke-width="0.8" stroke-dasharray="3 2"/>
+      <text x="370" y="172" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2f3ea3">NpayService</text>
+      <text x="370" y="192" text-anchor="middle" font-size="11" fill="#2f3ea3">등록 · 조회 · 철회</text>
+      <text x="370" y="212" text-anchor="middle" font-size="10" fill="#2f3ea3">본인 대조 · 매핑 상태 관리</text>
+
+      <rect x="550" y="30" width="155" height="75" rx="10" fill="#ffffff" stroke="#e5e7eb"/>
+      <text x="627" y="58" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1a1d23">학사 원천 DB</text>
+      <text x="627" y="78" text-anchor="middle" font-size="10" fill="#6b7280">→ 사용자 마스터 동기화</text>
+
+      <rect x="550" y="165" width="155" height="75" rx="10" fill="#ffffff" stroke="#e5e7eb"/>
+      <text x="627" y="193" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1a1d23">NPAY 테이블</text>
+      <text x="627" y="213" text-anchor="middle" font-size="10" fill="#6b7280">매핑 · 상태 이력 · 전문 로그</text>
+
+      <line x1="181" y1="135" x2="263" y2="135" stroke="#2f3ea3" stroke-width="1.5" marker-end="url(#dku-npay-arrow)" marker-start="url(#dku-npay-arrow)"/>
+      <text x="222" y="125" text-anchor="middle" font-size="10" fill="#6b7280">HTTPS · JSON</text>
+
+      <line x1="477" y1="67" x2="548" y2="67" stroke="#2f3ea3" stroke-width="1.5" marker-end="url(#dku-npay-arrow)"/>
+      <text x="512" y="59" text-anchor="middle" font-size="9" fill="#6b7280">등록 시 동기화</text>
+
+      <line x1="477" y1="202" x2="548" y2="202" stroke="#2f3ea3" stroke-width="1.5" marker-end="url(#dku-npay-arrow)"/>
+      <text x="512" y="194" text-anchor="middle" font-size="9" fill="#6b7280">상태·로그 적재</text>
+    </svg>`,
+    achievements: [
+      "페이스사인 연계용 등록·조회·철회 API 3종을 기존 학생증 시스템 안에 별도 패키지로 분리해 구축했습니다",
+      "요청 로깅 → 인증 → 입력 검증을 AOP로 분리해, 어노테이션 하나만 붙이면 새 API에도 같은 처리가 적용되는 구조로 만들었습니다",
+      "등록 요청마다 학사 원천 DB에서 사용자 정보를 동기화한 뒤 이름(한글·영문)·생년월일·학적 상태로 본인 여부를 대조하도록 구현했습니다",
+      "같은 요청이 반복돼도 결과가 달라지지 않도록 등록·철회를 멱등하게 처리하고, 실제로 상태가 바뀐 경우에만 이력을 남기도록 했습니다",
+      "요청 ID·매핑키·학번으로 전문 로그를 찾을 수 있는 테스트·조회 화면 7종과 인수인계 문서, Postman 컬렉션을 함께 만들었습니다"
+    ],
+    challenges: [
+      {
+        problem: "인증 실패나 입력값 오류처럼 업무 로직에 들어가기도 전에 끝나는 요청도 외부 기관과 대조하려면 로그가 반드시 남아야 했는데, 인증·검증·로깅을 각 API 안에 직접 넣으면 API가 늘 때마다 같은 코드가 반복되고 빠뜨릴 위험이 있었음",
+        solution: "로깅·인증·입력 검증을 각각 AOP로 분리하고 로깅 AOP가 나머지 전체를 감싸도록 순서를 잡아, 인증이나 검증에서 실패한 요청도 오류 응답까지 로그에 남도록 구현",
+        detail: [
+          "API 메서드에 전용 어노테이션을 붙이면 '요청 로그 → 인증 → 입력 검증 → 컨트롤러 → 서비스' 순서로 처리가 흐르도록 AOP를 구성했습니다. 로깅 AOP를 가장 바깥에 둔 덕분에 인증이나 입력 검증에서 예외가 나도 로깅 AOP가 그 예외를 받아 오류 코드와 실패 응답 전문을 기록한 뒤 다시 던지고, 최종 응답은 컨트롤러의 예외 처리기에서 규격에 맞춰 내려갑니다.",
+          "입력 검증은 요청 모델의 각 필드에 필수 여부·타입·최대 길이·정규식·허용값을 어노테이션으로 표시해두고, 이를 읽어 항목별 검증기가 확인하는 방식으로 만들었습니다. 그래서 새 필드나 새 API가 생겨도 검증 코드를 따로 작성할 필요 없이 표시만 추가하면 됩니다.",
+          "조회·철회 요청에는 학번이 없고 매핑키만 오기 때문에, 로그를 남길 때 매핑키로 학번을 찾아 함께 저장하도록 보완했습니다. 이 보완이 인증보다 먼저 수행되어서, 인증에 실패한 요청도 학번으로 검색해 확인할 수 있습니다."
+        ]
+      },
+      {
+        problem: "외부 기관이 네트워크 재시도 등으로 같은 등록·철회 요청을 여러 번 보낼 수 있고, 한 학생이 해지 후 다시 가입하는 경우도 있어서, 요청이 반복돼도 데이터가 꼬이지 않으면서 상태 변화는 정확히 추적돼야 했음",
+        solution: "매핑을 삭제하지 않고 '등록 → 철회 → 재등록' 상태로 관리하며, 이미 같은 상태인 요청은 변경 없이 성공 응답만 돌려주고 실제로 상태가 바뀐 경우에만 이력을 남기도록 구현",
+        detail: [
+          "같은 학생이 같은 매핑키로 다시 등록하면 성공으로 응답하되 상태와 이력은 건드리지 않고, 철회된 매핑키로 다시 등록하면 '재등록' 이력을 남기며 상태를 되돌립니다. 같은 학번에 이미 다른 활성 매핑키가 있거나, 매핑키가 다른 학생에게 연결돼 있으면 각각 별도의 오류 코드로 거절해 한 학생에게 매핑이 중복되지 않도록 했습니다.",
+          "처음에는 매핑키를 기본키로 두었는데, 매핑키는 외부 기관이 발급하는 값이라 나중에 바뀔 수 있다는 점을 고려해 숫자형 기본키를 따로 두고 매핑키에는 유일 인덱스만 유지하는 구조로 변경했습니다. 기존 데이터가 있는 환경을 위해 구조 변경용 SQL도 따로 작성했습니다."
+        ]
+      },
+      {
+        problem: "등록 요청에 담긴 이름·생년월일이 학교 정보와 일치하는지 확인해야 했는데, 학사 원천과 학생증 시스템의 사용자 정보가 시차를 두고 동기화되다 보니 학생증 시스템에만 의존하면 최신 학적 상태가 반영되지 않을 수 있었고, 이름 표기 방식(띄어쓰기·영문 이름·쉼표)도 제각각이었음",
+        solution: "등록 요청마다 학사 원천에서 사용자 정보를 먼저 동기화한 뒤 대조하고, 이름은 공백·쉼표를 제거한 뒤 한글·영문 이름 중 하나와 대소문자 무시로 일치하면 통과시키도록 처리",
+        detail: "등록 요청이 오면 학사 원천에서 해당 학번을 조회해 학생증 시스템의 사용자 정보를 새로 넣거나 갱신하고, 원천에 없으면 그 자리에서 거절합니다. 이후 갱신된 정보로 이름·생년월일·학적 상태(재학·휴학·연구재학·연구휴학만 허용)를 차례로 확인하는데, 각 항목마다 서로 다른 오류 코드를 내려줘서 어떤 이유로 실패했는지 상대 기관과 바로 확인할 수 있게 했습니다."
+      }
+    ]
+  },
+  {
     id: "naverpay-gateway",
     featured: true,
     company: "현대백화점",
@@ -702,7 +781,7 @@ const skillCategories = [
     name: "언어 · 프레임워크",
     skills: [
       { label: "Java", match: ["Java 8", "Java 8/11", "Java 11", "Java 17"] },
-      { label: "Spring Boot / Spring Framework", match: ["Spring Framework 5", "Spring Boot 2.7", "Spring Boot 2.5", "Spring Boot 3.4", "Spring Boot 3.2"] },
+      { label: "Spring Boot / Spring Framework", match: ["Spring Framework 5", "Spring Framework 3.2", "Spring Boot 2.7", "Spring Boot 2.5", "Spring Boot 3.4", "Spring Boot 3.2"] },
       { label: "React", match: ["React 18"] },
       { label: "TypeScript", match: ["TypeScript"] }
     ]
